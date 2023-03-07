@@ -87,9 +87,14 @@ describe("Main Page", () => {
       ],
     });
 
-    cy.get("#titleInput").type("Post Test");
-    cy.get("#urlInput").type("this is a post request");
+    cy.get("#titleInput").type("Post Test").should("have.value", "Post Test");
+    cy.get("#urlInput")
+      .type("this is a post request")
+      .should("have.value", "this is a post request");
     cy.get("button").click();
+
+    cy.get("#1").should("be.visible");
+    cy.get("#2").should("be.visible");
 
     cy.get("#3")
       .should("be.visible")
