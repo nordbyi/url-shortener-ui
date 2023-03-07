@@ -21,12 +21,11 @@ const App = (props) => {
     getData()
   }, [])
 
-
     return (
       <main className="App">
         <header>
           <h1>URL Shortener</h1>
-          <UrlForm />
+          <UrlForm addUrl={setUrls}/>
         </header>
 
         <UrlContainer urls={urls}/>
