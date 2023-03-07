@@ -1,21 +1,27 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { getUrls } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
-export class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      urls: []
+const App = (props) => {
+
+  const [urls, setUrls] = useState([])
+
+  useEffect(() => {
+    const getData = async () => {
+      try{
+        const data = await getUrls()
+        console.log(data)
+        setUrls(data.urls)
+      } catch {
+        console.log('error')
+      }
     }
-  }
+    getData()
+  }, [])
 
-  componentDidMount() {
-  }
 
-  render() {
     return (
       <main className="App">
         <header>
@@ -23,10 +29,10 @@ export class App extends Component {
           <UrlForm />
         </header>
 
-        <UrlContainer urls={this.state.urls}/>
+        <UrlContainer urls={urls}/>
       </main>
     );
   }
-}
+
 
 export default App;
