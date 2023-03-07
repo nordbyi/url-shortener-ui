@@ -12,7 +12,7 @@ describe("Main Page", () => {
         {
           id: 2,
           long_url: "https://totallynotausabelURL/also/I/like/turtles",
-          short_url: "http://localhost:3001/useshorturl/1",
+          short_url: "http://localhost:3001/useshorturl/2",
           title: "I like Turtles"
         }
       ],
@@ -20,6 +20,30 @@ describe("Main Page", () => {
     cy.visit("http://localhost:3000")
   });
   it("Should have a page title visble", () => {
+    cy.get('h1').should('be.visible')
+  })
 
+  it("Should display shortened urls", () => {
+    cy.get('section').children().should('have.length', 2)
+    cy.get('#1').should('be.visible')
+    cy.get('#1').contains('Awesome photo')
+    cy.get('#1').contains('http://localhost:3001/useshorturl/1')
+    cy.get('#1').contains('https://images.unsplash.com/photo-1531898418865-480b7090470f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80')
+
+    cy.get('#2').should('be.visible')
+    cy.get('#2').contains('I like Turtles')
+    cy.get('#2').contains('http://localhost:3001/useshorturl/2')
+    cy.get('#2').contains('https://totallynotausabelURL/also/I/like/turtles')
+  })
+
+  it("Should have a visible form with inputs", () => {
+    cy.get('form').should('be.visible')
+    cy.get('#urlInput').should('be.visible')
+    cy.get('#titleInput').should('be.visible')
+  })
+
+  it('Should display values in inputs when typed into', () => {
+    cy.get('#titleInput').type('this is a test').should("have.value", "this is a test")
+    cy.get('#urlInput').type('hello').should("have.value", "hello")
   })
 });
