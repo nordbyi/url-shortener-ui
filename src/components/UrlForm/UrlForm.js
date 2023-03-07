@@ -22,7 +22,7 @@ class UrlForm extends Component {
       title: this.state.title
     }
     postRequest(post).then(response => {
-      getUrls().then(data => console.log(data))
+      getUrls().then(data => this.props.addUrl(data.urls))
     })
     this.clearInputs();
   }
